@@ -1,24 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
-
+import "./App.css";
+import ShowList from "./components/Screen";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import BookingForm from "./components/BookingForm";
 function App() {
+  const [response, setResponse] = useState([]);
+  async function fetchApi() {
+    try {
+      const a = await axios.get("https://api.tvmaze.com/search/shows?q=all");
+      setResponse(a.data);
+    } catch (error) {
+      console.log("Error" + error);
+    }
+  }
+  useEffect(() => {
+    fetchApi();
+  }, []);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<ShowList shows={response} />}></Route>
+        <Route path="/BookTicket/:id" element={<BookingForm shows={response}/>}></Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
