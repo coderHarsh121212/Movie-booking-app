@@ -4,6 +4,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import BookingForm from "./components/BookingForm";
+import "./App.css"  
 function App() {
   const [response, setResponse] = useState([]);
   async function fetchApi() {
