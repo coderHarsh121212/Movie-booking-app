@@ -52,9 +52,7 @@ const ShowList = ({ shows }) => {
             </div>
             <div className="flex flex-col sm:gap-1">
               <h1 className="font-sans text-sm sm:text-xl">Description:</h1>
-              <p className="text-xs sm:text-sm">
-                {clickShow && clickShow.summary}
-              </p>
+              <div dangerouslySetInnerHTML={{ __html: clickShow && clickShow.summary }} />;
             </div>
             <div className="w-20 mx-auto my-2 sm:w-32">
               <button
