@@ -1,12 +1,11 @@
 import React, { useState } from "react";
-import ReactHtmlParser from "html-react-parser";
+
 import { useNavigate } from "react-router-dom";
 
 const ShowList = ({ shows }) => {
   const [clickShow, setClickShow] = useState(null);
   const navigate = useNavigate();
-  const sanitizedText =
-    clickShow && clickShow.summary ? ReactHtmlParser(clickShow.summary) : null;
+
   return (
     <div className="mx-auto px-4 py-8 grid grid-cols-2 bg-blue-100">
       <div className="w-full">
@@ -41,29 +40,39 @@ const ShowList = ({ shows }) => {
             ))}
         </div>
       </div>
-    { clickShow ? <div className="w-full">
-        <h1 className="text-2xl font-bold mb-4 text-center">Description</h1>
-        <div className="flex-col p-5 gap-5">
-          <div className="flex sm:gap-2 justify-center items-center">
-            <h1 className="font-sans text-sm sm:text-xl">Movie Name:</h1>
-            <p className="font-serif text-xs text-blue-500 sm:text-lg">
-              {clickShow && clickShow.name}
-            </p>
-          </div>
-          <div className="flex flex-col sm:gap-1">
-            <h1 className="font-sans text-sm sm:text-xl">Description:</h1>
-            <p className="text-xs sm:text-sm">{sanitizedText}</p>
-          </div>
-          <div className="w-20 mx-auto my-2 sm:w-32">
-            <button
-              className="bg-blue-500 sm:px-5 sm:py-2 text-white rounded w-full hover:bg-blue-400 text-xs px-3 py-1 sm:text-lg"
-              onClick={() => navigate(`/BookTicket/${clickShow && clickShow.id}`)}
-            >
-              Book Now
-            </button>
+      {clickShow ? (
+        <div className="w-full">
+          <h1 className="text-2xl font-bold mb-4 text-center">Description</h1>
+          <div className="flex-col p-5 gap-5">
+            <div className="flex sm:gap-2 justify-center items-center">
+              <h1 className="font-sans text-sm sm:text-xl">Movie Name:</h1>
+              <p className="font-serif text-xs text-blue-500 sm:text-lg">
+                {clickShow && clickShow.name}
+              </p>
+            </div>
+            <div className="flex flex-col sm:gap-1">
+              <h1 className="font-sans text-sm sm:text-xl">Description:</h1>
+              <p className="text-xs sm:text-sm">
+                {clickShow && clickShow.summary}
+              </p>
+            </div>
+            <div className="w-20 mx-auto my-2 sm:w-32">
+              <button
+                className="bg-blue-500 sm:px-5 sm:py-2 text-white rounded w-full hover:bg-blue-400 text-xs px-3 py-1 sm:text-lg"
+                onClick={() =>
+                  navigate(`/BookTicket/${clickShow && clickShow.id}`)
+                }
+              >
+                Book Now
+              </button>
+            </div>
           </div>
         </div>
-      </div>:<div className="text-sm sm:text-xl w-full h-screen flex justify-center items-center">Click on Summary Button for getting any Movie Summary</div>}
+      ) : (
+        <div className="text-sm sm:text-xl w-full h-screen flex justify-center items-center">
+          Click on Summary Button for getting any Movie Summary
+        </div>
+      )}
     </div>
   );
 };
